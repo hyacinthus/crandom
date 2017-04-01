@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/configor"
 	"github.com/joho/godotenv"
 )
@@ -11,15 +9,13 @@ var config = struct {
 	Debug bool `default:"false"`
 
 	DB struct {
-		Name     string
-		User     string `default:"root"`
-		Password string `required:"true" env:"DBPassword"`
-		Port     uint   `default:"3306"`
+		Host string `default:"mongo"`
+		Port uint   `default:"27017"`
+		Name string `default:"cold"`
 	}
 }{}
 
 func init() {
 	godotenv.Load()
 	configor.Load(&config)
-	fmt.Printf("config: %#v", config)
 }

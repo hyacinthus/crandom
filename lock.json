@@ -1,10 +1,34 @@
 {
-    "memo": "d78a9c90416e9116b75be9d40c2c860649866d44fcc58a439ee438cd66f6a84b",
+    "memo": "7cf730e2b1fa8e66aca01946414e3ac1e5bd5a4f80a0ac7bfdd0e566c10b004d",
     "projects": [
+        {
+            "name": "github.com/BurntSushi/toml",
+            "version": "v0.3.0",
+            "revision": "b26d9c308763d68093482582cea63d69be07a0f0",
+            "packages": [
+                "."
+            ]
+        },
         {
             "name": "github.com/dgrijalva/jwt-go",
             "version": "v3.0.0",
             "revision": "d2709f9f1f31ebcda9651b03077758c1f3a0018c",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/jinzhu/configor",
+            "branch": "master",
+            "revision": "b7df2005e02e9226447139012db968eda90a4b91",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/joho/godotenv",
+            "version": "v1.1",
+            "revision": "a5fda47e331bcd6aed83e573aa15bdadd475f956",
             "packages": [
                 "."
             ]
@@ -93,6 +117,14 @@
             "revision": "9a7256cb28ed514b4e1e5f68959914c4c28a92e0",
             "packages": [
                 "unix"
+            ]
+        },
+        {
+            "name": "gopkg.in/yaml.v1",
+            "branch": "v1",
+            "revision": "9f9df34309c04878acc86042b16630b0f696e1de",
+            "packages": [
+                "."
             ]
         }
     ]
