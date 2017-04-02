@@ -10,7 +10,7 @@ var config = struct {
 
 	DB struct {
 		Host string `default:"mongo"`
-		Port uint   `default:"27017"`
+		Port string `default:"27017"`
 		Name string `default:"cold"`
 	}
 }{}
