@@ -58,6 +58,16 @@ func deleteUser(c echo.Context) error {
 }
 
 func main() {
+	// mongo conn
+	session, err := mgo.Dial(
+		config.DB.Host + ":" +
+			config.DB.Port + "/" +
+			config.DB.Name)
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	// echo
 	e := echo.New()
 
 	// Middleware
