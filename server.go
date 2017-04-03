@@ -23,11 +23,16 @@ func main() {
 	// echo
 	e := echo.New()
 
+	// debug
+	if config.Debug {
+		e.Debug = true
+		e.Logger.SetLevel(log.DEBUG)
+		e.Logger.Debug("start debug mode")
+	}
+
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-
-	e.Logger.SetLevel(log.DEBUG)
 
 	// Routes
 	e.GET("/jokes/:id", getJoke)

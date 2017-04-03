@@ -22,14 +22,16 @@ type joke struct {
 func getJoke(c echo.Context) error {
 	var j joke
 	col := db.C("joke")
-	n, _ := col.Count()
-	c.Logger().Debugf("id:%s, count:%d", c.Param("id"), n)
+	oid := bson.ObjectIdHex(c.Param("id"))
+	if !oid.Valid() {
+		return c.JSON(http.StatusBadRequest, newErrMsg("InvalidID", "invalid request joke id"))
+	}
 	err := col.FindId(bson.ObjectIdHex(c.Param("id"))).One(&j)
 	if err == mgo.ErrNotFound {
-		return echo.ErrNotFound
+		return c.JSON(http.StatusNotFound, newErrMsg("NotFound", err.Error()))
 	}
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, newErrMsg("ServerError", err.Error()))
 	}
 	return c.JSON(http.StatusOK, j)
 }
