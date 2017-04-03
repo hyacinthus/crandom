@@ -6,7 +6,8 @@ import (
 )
 
 var config = struct {
-	Debug bool `default:"false"`
+	Debug    bool `default:"false"`
+	PageSize int  `default:"10"`
 
 	DB struct {
 		Host string `default:"mongo"`

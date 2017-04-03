@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 	mgo "gopkg.in/mgo.v2"
@@ -34,4 +35,31 @@ func getJoke(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, newErrMsg("ServerError", err.Error()))
 	}
 	return c.JSON(http.StatusOK, j)
+}
+
+func getRandomJokes(c echo.Context) error {
+	// init size
+	var size int
+	var err error
+	reqSize := c.QueryParam("size")
+	if reqSize == "" {
+		size = config.PageSize
+	} else {
+		size, err = strconv.Atoi(reqSize)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, newErrMsg("InvalidParam", "size must be a number"))
+		}
+	}
+
+	// get random jokes
+	var jokes = make([]joke, size)
+	col := db.C("joke")
+	err = col.Pipe([]bson.M{{"$sample": bson.M{"size": size}}}).All(&jokes)
+	if err == mgo.ErrNotFound {
+		return c.JSON(http.StatusNotFound, newErrMsg("NotFound", err.Error()))
+	}
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, newErrMsg("ServerError", err.Error()))
+	}
+	return c.JSON(http.StatusOK, jokes)
 }

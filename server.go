@@ -36,6 +36,7 @@ func main() {
 
 	// Routes
 	e.GET("/jokes/:id", getJoke)
+	e.GET("/joke/random", getRandomJokes)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
