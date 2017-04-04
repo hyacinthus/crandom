@@ -1,5 +1,5 @@
 version: '2'
-service:
+services:
     api:
         image: muninn/crandom:latest
         ports: 
