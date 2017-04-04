@@ -1,5 +1,5 @@
 {
-    "memo": "2953fdb3b11a96c6c67089d56b4b4eac168d80cc3da96cfc040666f2cfa5ab20",
+    "memo": "dbcd387aff17066d02a5a0bb8954ae3831d9fc225be00d7cee23bb065532f5fe",
     "projects": [
         {
             "name": "github.com/BurntSushi/toml",
@@ -28,7 +28,7 @@
         {
             "name": "github.com/joho/godotenv",
             "version": "v1.1",
-            "revision": "a5fda47e331bcd6aed83e573aa15bdadd475f956",
+            "revision": "726cc8b906e3d31c70a9671c90a13716a8d3f50d",
             "packages": [
                 "."
             ]
@@ -96,7 +96,7 @@
         {
             "name": "golang.org/x/crypto",
             "branch": "master",
-            "revision": "459e26527287adbc2adcc5d0d49abff9a5f315a7",
+            "revision": "573951cbe80bb6352881271bb276f48749eab6f4",
             "packages": [
                 "acme",
                 "acme/autocert"
@@ -105,7 +105,7 @@
         {
             "name": "golang.org/x/net",
             "branch": "master",
-            "revision": "05d3205156cb1bdc096578d6457fa161cd950aa2",
+            "revision": "ffcf1bedda3b04ebb15a168a59800a73d6dc0f4d",
             "packages": [
                 "context",
                 "context/ctxhttp"
@@ -114,7 +114,7 @@
         {
             "name": "golang.org/x/sys",
             "branch": "master",
-            "revision": "9a7256cb28ed514b4e1e5f68959914c4c28a92e0",
+            "revision": "493114f68206f85e7e333beccfabc11e98cba8dd",
             "packages": [
                 "unix"
             ]
