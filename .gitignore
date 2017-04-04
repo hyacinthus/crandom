@@ -1,2 +1,8 @@
+# vs code debug
+debug
+
+# vendor
 vendor
+
+# dot env
 .env
