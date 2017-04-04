@@ -1,0 +1,14 @@
+version: '2'
+service:
+    api:
+        image: muninn/crandom:latest
+        ports: 
+            - 1323:1323
+        depends_on:
+            - mongo
+        restart: unless-stopped
+    mongo:
+        image: mongo:3.4.3
+        volumes:
+            - ./mongo_data:/data/db
+        restart: unless-stopped
