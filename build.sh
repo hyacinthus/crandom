@@ -1,2 +1,2 @@
 dep ensure
-go build
+go build -o crandom
