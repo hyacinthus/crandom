@@ -22,6 +22,7 @@ func main() {
 
 	// echo
 	e := echo.New()
+	e.HTTPErrorHandler = httpErrorHandler
 
 	// debug
 	if config.Debug {
