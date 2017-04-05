@@ -23,16 +23,17 @@ type joke struct {
 func getJoke(c echo.Context) error {
 	var j joke
 	col := db.C("joke")
-	oid := bson.ObjectIdHex(c.Param("id"))
-	if !oid.Valid() {
-		return c.JSON(http.StatusBadRequest, newErrMsg("InvalidID", "invalid request joke id"))
+	id := c.Param("id")
+	if !bson.IsObjectIdHex(id) {
+		return newHTTPError(http.StatusBadRequest, "InvalidID", "invalid request joke id")
 	}
-	err := col.FindId(bson.ObjectIdHex(c.Param("id"))).One(&j)
+	oid := bson.ObjectIdHex(id)
+	err := col.FindId(bson.ObjectIdHex(id)).One(&j)
 	if err == mgo.ErrNotFound {
-		return c.JSON(http.StatusNotFound, newErrMsg("NotFound", err.Error()))
+		return newHTTPError(http.StatusNotFound, "NotFound", err.Error())
 	}
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, newErrMsg("ServerError", err.Error()))
+		return err
 	}
 	return c.JSON(http.StatusOK, j)
 }
@@ -47,7 +48,7 @@ func getRandomJokes(c echo.Context) error {
 	} else {
 		size, err = strconv.Atoi(reqSize)
 		if err != nil {
-			return c.JSON(http.StatusBadRequest, newErrMsg("InvalidParam", "size must be a number"))
+			return newHTTPError(http.StatusBadRequest, "InvalidParam", "size must be a number")
 		}
 	}
 
@@ -55,11 +56,8 @@ func getRandomJokes(c echo.Context) error {
 	var jokes = make([]joke, size)
 	col := db.C("joke")
 	err = col.Pipe([]bson.M{{"$sample": bson.M{"size": size}}}).All(&jokes)
-	if err == mgo.ErrNotFound {
-		return c.JSON(http.StatusNotFound, newErrMsg("NotFound", err.Error()))
-	}
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, newErrMsg("ServerError", err.Error()))
+		return err
 	}
 	return c.JSON(http.StatusOK, jokes)
 }

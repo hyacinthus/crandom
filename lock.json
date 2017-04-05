@@ -96,7 +96,7 @@
         {
             "name": "golang.org/x/crypto",
             "branch": "master",
-            "revision": "573951cbe80bb6352881271bb276f48749eab6f4",
+            "revision": "c78caca803c95773f48a844d3dcab04b9bc4d6dd",
             "packages": [
                 "acme",
                 "acme/autocert"
