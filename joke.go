@@ -27,7 +27,6 @@ func getJoke(c echo.Context) error {
 	if !bson.IsObjectIdHex(id) {
 		return newHTTPError(http.StatusBadRequest, "InvalidID", "invalid request joke id")
 	}
-	oid := bson.ObjectIdHex(id)
 	err := col.FindId(bson.ObjectIdHex(id)).One(&j)
 	if err == mgo.ErrNotFound {
 		return newHTTPError(http.StatusNotFound, "NotFound", err.Error())

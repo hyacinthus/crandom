@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/labstack/echo"
+)
 
 type httpError struct {
 	code    int
@@ -22,7 +26,7 @@ func (e *httpError) Error() string {
 }
 
 // httpErrorHandler customize echo's HTTP error handler.
-func httpErrorHandler(err error, c Context) {
+func httpErrorHandler(err error, c echo.Context) {
 	var (
 		code = http.StatusInternalServerError
 		key  = "ServerError"
@@ -40,7 +44,7 @@ func httpErrorHandler(err error, c Context) {
 	}
 
 	if !c.Response().Committed {
-		if c.Request().Method == HEAD {
+		if c.Request().Method == echo.HEAD {
 			err := c.NoContent(code)
 			if err != nil {
 				c.Logger().Error(err)
