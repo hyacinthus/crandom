@@ -37,8 +37,11 @@ func main() {
 	e.Use(middleware.CORS())
 
 	// Routes
-	e.GET("/jokes/:id", getJoke)
 	e.GET("/joke/random", getRandomJokes)
+	e.GET("/jokes/:id", getJoke)
+	e.PUT("/jokes/:id", updateJoke)
+	e.DELETE("/jokes/:id", deleteJoke)
+	e.POST("/jokes", createJoke)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))

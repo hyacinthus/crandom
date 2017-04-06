@@ -11,14 +11,15 @@ import (
 )
 
 type joke struct {
-	ID      bson.ObjectId `bson:"_id,omitempty" json:"id"`
-	Content string        `bson:"content" json:"content"`
-	Answer  string        `bson:"answer,omitempty" json:"answer,omitempty"`
-	VIA     string        `bson:"via,omitempty" json:"via,omitempty"`
-	URL     string        `bson:"url,omitempty" json:"url,omitempty"`
-	Created time.Time     `bson:"_created,omitempty" json:"created,omitempty"`
-	Updated time.Time     `bson:"_updated,omitempty" json:"updated,omitempty"`
-	ETag    string        `bson:"_etag,omitempty" json:"-"`
+	ID       bson.ObjectId `bson:"_id,omitempty" json:"id"`
+	Content  string        `bson:"content" json:"content"`
+	Answer   string        `bson:"answer,omitempty" json:"answer,omitempty"`
+	VIA      string        `bson:"via,omitempty" json:"via,omitempty"`
+	URL      string        `bson:"url,omitempty" json:"url,omitempty"`
+	Provider bson.ObjectId `bson:"provider,omitempty" json:"provider,omitempty"`
+	Created  time.Time     `bson:"_created,omitempty" json:"created,omitempty"`
+	Updated  time.Time     `bson:"_updated,omitempty" json:"updated,omitempty"`
+	ETag     bson.ObjectId `bson:"_etag,omitempty" json:"-"`
 }
 
 func getJoke(c echo.Context) error {
@@ -66,6 +67,7 @@ func createJoke(c echo.Context) error {
 	j := &joke{
 		ID:      bson.NewObjectId(),
 		Created: bson.Now(),
+		ETag:    bson.NewObjectId(),
 	}
 	if err := c.Bind(j); err != nil {
 		return newHTTPError(http.StatusBadRequest, "InvalidRequestData", err.Error())
@@ -92,6 +94,7 @@ func updateJoke(c echo.Context) error {
 	}
 	var data = make(bson.M)
 	data["_updated"] = bson.Now()
+	data["_etag"] = bson.NewObjectId()
 	if j.Content != "" {
 		data["content"] = j.Content
 	}
@@ -120,4 +123,19 @@ func updateJoke(c echo.Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, newj)
+}
+
+func deleteJoke(c echo.Context) error {
+	id := c.Param("id")
+	if !bson.IsObjectIdHex(id) {
+		return newHTTPError(http.StatusBadRequest, "InvalidID", "invalid request joke id")
+	}
+	err := db.C("joke").RemoveId(bson.ObjectIdHex(id))
+	if err == mgo.ErrNotFound {
+		return newHTTPError(http.StatusNotFound, "NotFound", err.Error())
+	}
+	if err != nil {
+		return err
+	}
+	return c.NoContent(http.StatusNoContent)
 }
