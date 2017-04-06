@@ -109,7 +109,7 @@ func updateJoke(c echo.Context) error {
 	}
 	// update db
 	col := db.C("joke")
-	err := col.UpdateId(id, data)
+	err := col.UpdateId(bson.ObjectIdHex(id), data)
 	if err == mgo.ErrNotFound {
 		return newHTTPError(http.StatusBadRequest, "InvalidID", err.Error())
 	}
