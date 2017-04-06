@@ -17,8 +17,8 @@ type joke struct {
 	VIA      string        `bson:"via,omitempty" json:"via,omitempty"`
 	URL      string        `bson:"url,omitempty" json:"url,omitempty"`
 	Provider bson.ObjectId `bson:"provider,omitempty" json:"provider,omitempty"`
-	Created  time.Time     `bson:"_created,omitempty" json:"created,omitempty"`
-	Updated  time.Time     `bson:"_updated,omitempty" json:"updated,omitempty"`
+	Created  time.Time     `bson:"_created,omitempty" json:"-"`
+	Updated  time.Time     `bson:"_updated,omitempty" json:"-"`
 	ETag     bson.ObjectId `bson:"_etag,omitempty" json:"-"`
 }
 
