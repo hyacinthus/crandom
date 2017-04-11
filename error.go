@@ -37,6 +37,10 @@ func httpErrorHandler(err error, c echo.Context) {
 		code = he.code
 		key = he.Key
 		msg = he.Message
+	} else if ee, ok := err.(*echo.HTTPError); ok {
+		code = ee.Code
+		key = http.StatusText(code)
+		msg = key
 	} else if config.Debug {
 		msg = err.Error()
 	} else {
