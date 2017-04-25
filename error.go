@@ -44,6 +44,7 @@ func httpErrorHandler(err error, c echo.Context) {
 	} else if config.Debug {
 		msg = err.Error()
 	} else {
+		c.Logger().Error(err.Error())
 		msg = http.StatusText(code)
 	}
 
@@ -51,12 +52,12 @@ func httpErrorHandler(err error, c echo.Context) {
 		if c.Request().Method == echo.HEAD {
 			err := c.NoContent(code)
 			if err != nil {
-				c.Logger().Error(err)
+				c.Logger().Error(err.Error())
 			}
 		} else {
 			err := c.JSON(code, newHTTPError(code, key, msg))
 			if err != nil {
-				c.Logger().Error(err)
+				c.Logger().Error(err.Error())
 			}
 		}
 	}
